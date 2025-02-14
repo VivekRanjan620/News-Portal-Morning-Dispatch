@@ -1,16 +1,26 @@
 import React from 'react'
-import { Button } from './components/ui/button'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import SignInForm from './auth/forms/SignInForm'
+import SignUpForm from './auth/forms/SignUpForm'
+import Home from './Pages/Home'
+import About from './Pages/About'
+import Dashboard from './Pages/Dashboard'
+import NewsArticles from './Pages/NewsArticles'
 
 function App() {
   return (
 <>
-       <h1 className="text-5xl font-bold text-red-700 underline">
-      Hello world!
-    </h1>
-      
-      <div>
-      <Button>Click me</Button>
-    </div>
+    <BrowserRouter>
+    <Routes>
+      <Route path='/sign-in' element={<SignInForm />} /> 
+      <Route path='/sign-up' element={<SignUpForm />} /> 
+
+      <Route path="/" element={<Home />} />
+      <Route path="/about" element={<About />} />
+      <Route path="/dashboard" element={<Dashboard />} />
+      <Route path="/news" element={<NewsArticles />} />
+    </Routes>
+    </BrowserRouter>
 
     </>
   )
