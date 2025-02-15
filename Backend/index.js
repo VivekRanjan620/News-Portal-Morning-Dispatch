@@ -18,7 +18,7 @@ mongoose
   .then(() => console.log("Database connected"))
   .catch((error) => console.log("Database error", error));
 
-  
+
 const app = express();
 
 // for allowing json object in req body
@@ -29,3 +29,15 @@ app.listen(5000, () => {
 });
 
 app.use("/api/auth", authRoutes)
+
+app.use((err, req, res, next)=>{
+  const statusCode = err.statusCode || 500
+
+  const message = err.message || "Internal server Error"
+
+  res.status(statusCode).json({
+    sucess: false,
+    statusCode,
+    message,
+  })
+})
