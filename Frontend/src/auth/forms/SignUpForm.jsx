@@ -1,11 +1,11 @@
-import React from "react";
-import { Link, Links } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, Links, useNavigate } from "react-router-dom";
 
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-
 import { Button } from "@/components/ui/button"
+
 import {
   Form,
   FormControl,
@@ -16,6 +16,7 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import { useToast } from "@/hooks/use-toast";
 
 const formSchema = z.object({
   username: z.string().min(2, { message: "Username must be at least 2 characters." }),
@@ -25,10 +26,15 @@ const formSchema = z.object({
 
 
 function SignUpForm() {
+  const { toast } = useToast()
+  const navigate = useNavigate()
+  const[loading, setLoading] = useState(false)
+  const[errorMessage, setErrorMessage] = useState(null)
+  
   // 1. Define your form.
   const form =
     useForm 
-    (  {
+    ( {
         resolver: zodResolver(formSchema),
         defaultValues: {
           username: "",
@@ -38,10 +44,38 @@ function SignUpForm() {
       })
 
         // 2. Define a submit handler.
-  function onSubmit(values) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values)
+     async function onSubmit(values) {
+      // console.log(values);
+    try {
+        setLoading(true)
+        setErrorMessage(null)
+
+        const res = await fetch("/api/auth/signup", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(values),
+        })
+
+        const data = await res.json()
+
+        if(data.success === false){
+          setLoading(false)
+          toast({ title: "sign up failed! please try again."})
+
+          return setErrorMessage(data.message)
+        }
+
+        setLoading(false)
+
+        if(res.ok){
+          toast({ title: "Sign up Successful!"})
+            navigate("/sign-in")
+        }
+    } catch (error) {
+      setErrorMessage(error.message)
+      setLoading(false)
+      toast({ title: "Something went wrong!" })
+    }
   }
 
 
@@ -76,7 +110,7 @@ function SignUpForm() {
         {/* right */}
         <div className="flex-1">
         <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
         <FormField
           control={form.control}
           name="username"
@@ -124,7 +158,15 @@ function SignUpForm() {
             </FormItem>
           )}
         />
-        <Button type="submit" className="bg-blue-500 w-full">Submit</Button>
+        <Button type="submit" className="bg-blue-500 w-full"
+         disabled={loading}
+         >
+          {loading ? (
+            <span className="animate-pulse">Loading...</span>
+          ) : (
+            <span>Sign Up</span>
+          )}
+          </Button>
       </form>
     </Form>
 
@@ -133,7 +175,9 @@ function SignUpForm() {
 
       <Link to="/sign-in" className="text-blue-500">Sign In</Link>
     </div>
-        </div>
+
+    {errorMessage && <p className="mt-5 text-red-500">{errorMessage}</p>}
+    </div>
       </div>
     </div>
   );

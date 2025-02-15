@@ -7,6 +7,7 @@ import About from './Pages/About'
 import Dashboard from './Pages/Dashboard'
 import NewsArticles from './Pages/NewsArticles'
 import Header from './components/shared/Header'
+import { Toaster } from './components/ui/toaster'
 
 function App() {
   return (
@@ -22,6 +23,8 @@ function App() {
       <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/news" element={<NewsArticles />} />
     </Routes>
+
+    <Toaster />
     </BrowserRouter>
 
     </>
