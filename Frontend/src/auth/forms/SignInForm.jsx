@@ -86,8 +86,8 @@ function SignInForm() {
         {/* left */}
         <div className="flex-1">
           <Link to={"/"} className="font-bold text-2xl sm:text-4xl flex-wrap">
-            <span className="text-slate-500">Morning</span>
-            <span className="text-slate-900">Dispatch</span>
+            <span className="text-slate-500">Sports</span>
+            <span className="text-slate-900">Wire</span>
           </Link>
 
           <h2

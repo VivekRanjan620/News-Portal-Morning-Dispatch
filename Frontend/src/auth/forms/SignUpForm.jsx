@@ -87,14 +87,14 @@ function SignUpForm() {
       >
         {/* left */}
         <div className="flex-1">
-          <Link to={"/"} className="font-bold text-2xl sm:text-4xl flex-wrap">
-            <span className="text-slate-500">Morning</span>
-            <span className="text-slate-900">Dispatch</span>
+          <Link to={"/"} className="font-bold text-2.5xl sm:text-4xl flex-wrap">
+            <span className="text-slate-500">Sports</span>
+            <span className="text-slate-900">Wire</span>
           </Link>
 
           <h2
             className="text-[24px] md:text-[30px] font-bold leading-[140%]
-                  tracking-tighter pt-5 sm:pt-12"
+                  tracking-tighter pt-5 sm:pt-8"
           >
             Create a new account
           </h2>
