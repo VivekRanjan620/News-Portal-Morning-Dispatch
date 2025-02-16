@@ -17,6 +17,8 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { useToast } from "@/hooks/use-toast";
+import { useDispatch, useSelector } from "react-redux";
+import { signInFailure, signInStart, signInSuccess } from "@/redux/user/userslice";
 
 const formSchema = z.object({
   email: z.string().email({ message: "Invalid email address." }),
@@ -27,8 +29,8 @@ const formSchema = z.object({
 function SignInForm() {
   const { toast } = useToast()
   const navigate = useNavigate()
-  const[loading, setLoading] = useState(false)
-  const[errorMessage, setErrorMessage] = useState(null)
+  const dispatch = useDispatch()
+  const {loading, error: errorMessage} = useSelector((state) => state.user)
   
   // 1. Define your form.
   const form =
@@ -45,8 +47,7 @@ function SignInForm() {
      async function onSubmit(values) {
       // console.log(values);
     try {
-        setLoading(true)
-        setErrorMessage(null)
+       dispatch(signInStart())
 
         const res = await fetch("/api/auth/signin", {
           method: "POST",
@@ -60,19 +61,18 @@ function SignInForm() {
           setLoading(false)
           toast({ title: "sign in failed! please try again."})
 
-          return setErrorMessage(data.message)
+          dispatch(signInFailure(data.message))
         }
 
-        setLoading(false)
 
         if(res.ok){
+          dispatch(signInSuccess(data))
           toast({ title: "Sign in Successful!"})
             navigate("/")
         }
     } catch (error) {
-      setErrorMessage(error.message)
-      setLoading(false)
       toast({ title: "Something went wrong!" })
+      dispatch(signInFailure(error.message))
     }
   }
 
