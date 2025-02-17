@@ -22,7 +22,7 @@ function Header() {
         <Link to={"/"}>
           <h1 className="font-bold text-xl sm:text-2xl flex flex-wrap">
             <span className="text-slate-500">Sports</span>
-            <span className="text-slate-900">Wire</span>
+            <span className="text-slate-900">Wire360</span>
           </h1>
         </Link>
 
