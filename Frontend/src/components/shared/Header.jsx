@@ -72,22 +72,22 @@ function Header() {
             <DropdownMenuContent className="w-60">
               <DropdownMenuLabel>My Account</DropdownMenuLabel>
 
-              <DropdownMenuSeparator className="bg-gray-400"/>
+              <DropdownMenuSeparator className="bg-gray-400" />
 
               <DropdownMenuItem className="block font-semibold text-sm">
                 <div className="flex flex-col gap-1">
                   <span>@{currentUser.username}</span>
                   <span>@{currentUser.email}</span>
                 </div>
-                </DropdownMenuItem>
-
-              <DropdownMenuItem className="font-semibold mt-2">
-                  <Link to="/dashboard?tab=profile">Profile</Link>
               </DropdownMenuItem>
 
               <DropdownMenuItem className="font-semibold mt-2">
-                   Sign Out
-                </DropdownMenuItem> 
+                <Link to="/dashboard?tab=profile">Profile</Link>
+              </DropdownMenuItem>
+
+              <DropdownMenuItem className="font-semibold mt-2">
+                Sign Out
+              </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         ) : (

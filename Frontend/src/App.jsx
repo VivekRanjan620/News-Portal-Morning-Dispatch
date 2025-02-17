@@ -9,6 +9,7 @@ import NewsArticles from './Pages/NewsArticles'
 import Header from './components/shared/Header'
 import { Toaster } from './components/ui/toaster'
 import Footer from './components/shared/Footer'
+import PrivateRoute from './components/shared/PrivateRoute'
 
 function App() {
   return (
@@ -21,7 +22,11 @@ function App() {
 
       <Route path="/" element={<Home />} />
       <Route path="/about" element={<About />} />
+
+      <Route element={<PrivateRoute />}>
       <Route path="/dashboard" element={<Dashboard />} />
+      </Route>
+
       <Route path="/news" element={<NewsArticles />} />
     </Routes>
 
