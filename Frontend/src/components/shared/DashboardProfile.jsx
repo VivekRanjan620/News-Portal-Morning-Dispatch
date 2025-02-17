@@ -1,9 +1,25 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { Button } from "../ui/button";
 
 function DashboardProfile() {
   const { currentUser } = useSelector((state) => state.user);
+  const profilePicRef = useRef();
+
+  const [imageFile, SetImageFile] = useState(null);
+  const [imageFileUrl, SetImageFileUrl] = useState(null);
+
+  //  console.log(imageUrl)
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    // console.log(file)
+
+    if (file) {
+      SetImageFile(file);
+      SetImageFileUrl(URL.createObjectURL(file));
+    }
+  };
 
   return (
     <div className="max-w-lg mx-auto p-3 w-full">
@@ -12,11 +28,20 @@ function DashboardProfile() {
       </h1>
 
       <form className="flex flex-col gap-4">
+        <input
+          type="file"
+          accept="image/*"
+          hidden
+          ref={profilePicRef}
+          onChange={handleImageChange}
+        />
+
         <div className="w-32 h-32 self-center cursor-pointer  overflow-hidden">
           <img
-            src={currentUser.profilePicture}
+            src={imageFileUrl || currentUser.profilePicture}
             alt=""
             className="rounded-full w-full h-full object-cover border-8 border-gray-300"
+            onClick={() => profilePicRef.current.click()}
           />
         </div>
 
