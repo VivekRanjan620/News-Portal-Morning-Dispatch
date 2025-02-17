@@ -19,6 +19,7 @@ import { Input } from "@/components/ui/input"
 import { useToast } from "@/hooks/use-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { signInFailure, signInStart, signInSuccess } from "@/redux/user/userslice";
+import GoogleAuth from "@/components/shared/GoogleAuth";
 
 const formSchema = z.object({
   email: z.string().email({ message: "Invalid email address." }),
@@ -150,6 +151,8 @@ function SignInForm() {
             <span>Sign In</span>
           )}
           </Button>
+
+          <GoogleAuth />
       </form>
     </Form>
 
