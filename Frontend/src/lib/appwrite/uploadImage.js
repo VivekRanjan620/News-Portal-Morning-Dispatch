@@ -1,4 +1,4 @@
-import { ImageGravity } from "appwrite"
+import { ID, ImageGravity } from "appwrite"
 import { appwriteConfig, storage } from "./config"
 
 //UPLOAD FILE
@@ -17,7 +17,7 @@ export async function uploadFile(file) {
 }
 
 //Get File Url
-export async function getFilePreview(fileId) {
+export function getFilePreview(fileId) {
     try {
         const fileUrl = storage.getFilePreview(
             appwriteConfig.storageId,
